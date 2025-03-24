@@ -12,8 +12,14 @@ class UtilsTest extends TestCase
 {
     public function getFixtureFullPath(string $fixtureName): string
     {
-        $parts = [__DIR__,'fixtures', $fixtureName];
-        return realpath(implode('/', $parts));
+        $parts = [__DIR__, 'fixtures', $fixtureName];
+        $fullPath = realpath(implode('/', $parts));
+
+        if ($fullPath === false) {
+            throw new \RuntimeException("File not found: " . implode('/', $parts));
+        }
+
+        return $fullPath;
     }
 
     // Метод (функция), определенный внутри класса,
