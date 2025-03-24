@@ -10,7 +10,7 @@ use function Hexlet\Phpunit\Utils\reverseString;
 // Имя класса совпадает с именем файла
 class UtilsTest extends TestCase
 {
-    public function getFixtureFullPath($fixtureName)
+    public function getFixtureFullPath(string $fixtureName): string
     {
         $parts = [__DIR__,'fixtures', $fixtureName];
         return realpath(implode('/', $parts));
