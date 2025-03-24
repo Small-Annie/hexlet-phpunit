@@ -22,6 +22,15 @@ class UtilsTest extends TestCase
         return $fullPath;
     }
 
+    public function getFileContents(string $fixtureName): string
+    {
+        $content = file_get_contents($this->getFixtureFullPath($fixtureName));
+        if ($content === false) {
+            throw new \RuntimeException("Failed to read the file: " . $fixtureName);
+        }
+        return $content;
+    }
+
     // Метод (функция), определенный внутри класса,
     // Должен начинаться со слова test
     // Ключевое слово public нужно, чтобы PHPUnit мог вызвать этот тест снаружи
@@ -32,8 +41,8 @@ class UtilsTest extends TestCase
         $this->assertEquals('', reverseString(''));
         $this->assertEquals('olleh', reverseString('hello'));
 
-        $originalString = file_get_contents($this->getFixtureFullPath('original-long-string.ini'));
-        $reversedString = file_get_contents($this->getFixtureFullPath('reversed-long-string.ini'));
+        $originalString = $this->getFileContents('original-long-string.ini');
+        $reversedString = $this->getFileContents('reversed-long-string.ini');
         $this->assertEquals($reversedString, reverseString($originalString));
     }
 }
