@@ -10,6 +10,12 @@ use function Hexlet\Phpunit\Utils\reverseString;
 // Имя класса совпадает с именем файла
 class UtilsTest extends TestCase
 {
+    public function getFixtureFullPath($fixtureName)
+    {
+        $parts = [__DIR__,'fixtures', $fixtureName];
+        return realpath(implode('/', $parts));
+    }
+
     // Метод (функция), определенный внутри класса,
     // Должен начинаться со слова test
     // Ключевое слово public нужно, чтобы PHPUnit мог вызвать этот тест снаружи
@@ -19,5 +25,9 @@ class UtilsTest extends TestCase
         // И только потом актуальное (actual)
         $this->assertEquals('', reverseString(''));
         $this->assertEquals('olleh', reverseString('hello'));
+
+        $originalString = file_get_contents($this->getFixtureFullPath('original-long-string.ini'));
+        $reversedString = file_get_contents($this->getFixtureFullPath('reversed-long-string.ini'));
+        $this->assertEquals($reversedString, reverseString($originalString));
     }
 }
